@@ -6,10 +6,12 @@ rand('twister',seed);
 r=SampleSize;
 
 KD_vals = zeros(simulations,1);
+AD_vals = zeros(simulations,1);
 
 for n= 1:simulations
     samples_n = trnd(dof,[r,1]);
     KD_n = calc_KD(samples_n);
+    AD_n
     
     KD_vals(n) = KD_n;
 end

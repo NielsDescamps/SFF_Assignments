@@ -14,5 +14,5 @@ simulations = 1000;
 seed = 6;
 plot = true;
 
-[KD_cutoff_vals,AD_cutoff_vals] = KDAD_cutoff_studentt(dof,sample_size,sign_levels,simulations,seed,plot);
+[KD_cutoff_vals,AD_cutoff_vals] = KD_cutoff_studentt(dof,sample_size,sign_levels,simulations,seed,plot);
 
