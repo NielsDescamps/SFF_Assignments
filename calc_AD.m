@@ -1,4 +1,4 @@
-function AD = calc_AD(samples)
+function AD = calc_AD(samples,dof)
 %calc_AD calculates the AD statistic from a given set of student-t
 %distributed simulated samples
 
@@ -16,10 +16,13 @@ ecdf2 = reshape(ecdf2,[],1);
 sorted_samples = sort(samples);
 samples_column_vector = reshape(samples,[],1);
 
-pd = fitdist(samples_column_vector, 'tLocationScale');
-dofhat = pd.nu;  % Degrees of freedom
-muhat = pd.mu;   % Location parameter (mean)
-sigmahat = pd.sigma;  % Scale parameter (standard deviation)
+[muhat, sigmahat,dofhat] = calc_MLE(samples, dof, 'tLocation');
+% [muhat, sigmahat,dofhat] = mle_calc(samples,dof,'tLocationScale');
+% options = statset('MaxIter', 10000,'MaxFunEvals',1000);
+% pd = fitdist(samples_column_vector, 'tLocationScale',Options=options);
+% dofhat = pd.nu;  % Degrees of freedom
+% muhat = pd.mu;   % Location parameter (mean)
+% sigmahat = pd.sigma;  % Scale parameter (standard deviation)
 
 % determine fcdfit values
 yi = sort(samples);

@@ -1,0 +1,19 @@
+function [mu,sigma,nu] = calc_MLE(data, dof, distribution)
+    
+    init_params = [mean(data),std(data),dof];
+    options = optimoptions('fmincon','Display', 'off');
+
+    negloglikelihood_function = @(params) -sum(log(pdf(makedist(distribution,params(1),params(2),params(3)),data)));
+
+    % estimated_params = fmincon(negloglikelihood_function, init_params,[0,-1,0;0,0,-1],[0;0],[], [], [], [], [],options);
+    estimated_params = fmincon(negloglikelihood_function, init_params,[],[],[], [], [-Inf,0,0], [], [],options);
+
+
+    mu = estimated_params(1);
+    sigma = estimated_params(2);
+    nu = estimated_params(3);
+
+end
+
+
+

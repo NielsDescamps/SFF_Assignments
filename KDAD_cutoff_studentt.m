@@ -1,18 +1,20 @@
-function [KD_cutoff_vals,AD_cutoff_vals] = KDAD_cutoff_studentt(dof,SampleSize,alpha,simulations,seed,plot)
+function [KD_cutoff_vals,AD_cutoff_vals] = KDAD_cutoff_studentt(dof,SampleSize,alpha,simulations,seed,plot_KDvals)
 %Determines the cutoff value for a given
 
 rand('twister',seed);
-
 r=SampleSize;
+tsample = trnd(dof,[r,1]);
 
 KD_vals = zeros(simulations,1);
 AD_vals = zeros(simulations,1);
 
+
 for n= 1:simulations
-    samples_n = trnd(dof,[r,1]);
-    KD_n = calc_KD(samples_n);
-    AD_n = calc_AD(samples_n);
-    
+    indices = randi(r,1,r);
+    resample = tsample(indices);
+
+    KD_n = calc_KD(resample,dof);
+    AD_n = calc_AD(resample,dof);
     KD_vals(n) = KD_n;
     AD_vals(n) = AD_n;
 end
@@ -25,17 +27,24 @@ KD_cutoff_vals = prctile(sorted_KD_values,percentiles);
 AD_cutoff_vals = prctile(sorted_AD_values,percentiles);
 
 
-% if plot==true
-%     % pdf = (1:simulations)/simulations;
-%     % sorted_KD_vals = sort(KD_vals);
-% 
-%     [f, x] = ksdensity(KD_vals);
-% 
-%     plot(x,f);
-%     title('estimated pdf for KD values')
-%     xlabel('KD Values');
-%     ylabel('Probability Density');
-% 
-% end
+if plot_KDvals==true
+    % pdf = (1:simulations)/simulations;
+    % sorted_KD_vals = sort(KD_vals);
+    
+    [f, x] = ksdensity(KD_vals,'Function','pdf','Bandwidth', 0.01, 'Kernel', 'epanechnikov', 'NumPoints', 1000);
+    figure
+    plot(x,f);
+    title(['estimated pdf for KD values for r=',num2str(r),' and dof=',num2str(dof)])
+    xlabel('KD Values');
+    ylabel('Probability Density');
+    
+    [f, x] = ksdensity(AD_vals,'Function','pdf','Bandwidth', 0.01, 'Kernel', 'epanechnikov', 'NumPoints', 1000);
+    figure
+    plot(x,f);
+    title(['estimated pdf for AD values for r=',num2str(r),' and dof=',num2str(dof)])
+    xlabel('AD Values');
+    ylabel('Probability Density');
+    
+end
 
 end
