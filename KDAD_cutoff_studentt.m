@@ -2,6 +2,7 @@ function [KD_cutoff_vals,AD_cutoff_vals] = KDAD_cutoff_studentt(dof,SampleSize,a
 %Determines the cutoff value for a given
 
 rand('twister',seed);
+
 r=SampleSize;
 tsample = trnd(dof,[r,1]);
 
@@ -26,25 +27,25 @@ percentiles = [(1-alpha)*100];
 KD_cutoff_vals = prctile(sorted_KD_values,percentiles);
 AD_cutoff_vals = prctile(sorted_AD_values,percentiles);
 
-
 if plot_KDvals==true
-    % pdf = (1:simulations)/simulations;
-    % sorted_KD_vals = sort(KD_vals);
-    
     [f, x] = ksdensity(KD_vals,'Function','pdf','Bandwidth', 0.01, 'Kernel', 'epanechnikov', 'NumPoints', 1000);
     figure
     plot(x,f);
     title(['estimated pdf for KD values for r=',num2str(r),' and dof=',num2str(dof)])
     xlabel('KD Values');
     ylabel('Probability Density');
-    
+    file_name = ['figures/KDr',num2str(r),'dof',num2str(dof),'.png'];
+    saveas(gcf,file_name)
+
     [f, x] = ksdensity(AD_vals,'Function','pdf','Bandwidth', 0.01, 'Kernel', 'epanechnikov', 'NumPoints', 1000);
     figure
     plot(x,f);
     title(['estimated pdf for AD values for r=',num2str(r),' and dof=',num2str(dof)])
     xlabel('AD Values');
     ylabel('Probability Density');
-    
+    file_name = ['figures/ADr',num2str(r),'dof',num2str(dof),'.png'];
+    saveas(gcf,file_name)
+
 end
 
 end

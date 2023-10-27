@@ -8,24 +8,9 @@ r=length(samples);
 v=1:r;
 ecdf1 = (v-0.5)./r;
 ecdf1 = reshape(ecdf1,[],1);
-ecdf2 = (v-3/8)./(r+1/4);
-ecdf2 = reshape(ecdf2,[],1);
-
 
 % fitted cdf
-sorted_samples = sort(samples);
-samples_column_vector = reshape(samples,[],1);
-
 [muhat, sigmahat,dofhat]= calc_MLE(samples, dof, 'tLocationScale');
-% [muhat, sigmahat,dofhat] = mle_calc(samples,dof,'tLocationScale');
-
-% options = statset('MaxIter', 10000,'MaxFunEvals',1000);
-% pd = fitdist(samples_column_vector, 'tLocationScale',Options=options);
-% dofhat = pd.nu;  % Degrees of freedom
-% muhat = pd.mu;   % Location parameter (mean)
-% sigmahat = pd.sigma;  % Scale parameter (standard deviation)
-
-% determine fcdfit values
 yi = sort(samples);
 xi = (yi-muhat)./sigmahat; %correct for location and scale
 para = tcdf(xi,dofhat);
