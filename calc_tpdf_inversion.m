@@ -1,4 +1,4 @@
-function pdf = calc_pdf_inversion(v, Xrange, NumPoints, distribution)
+function pdf = calc_tpdf_inversion(v, Xrange, NumPoints, distribution)
 N = NumPoints;
 t_range = 100;
 x_range = Xrange;
@@ -11,11 +11,13 @@ t = t_min:dt:t_max;
 if distribution =='t'
 
     % get values for cf
-    cf_evals = zeros(1,N);
-    for i = 1:length(t)
-        cf_eval_i = characteristic_function_studentt(t(i),v);
-        cf_evals(i) = cf_eval_i;
-    end
+    % cf_evals = zeros(1,N);
+    cf_evals = characteristic_function_studentt(t,v);
+    
+    % for i = 1:length(t)
+    %     cf_eval_i = characteristic_function_studentt(t(i),v);
+    %     cf_evals(i) = cf_eval_i;
+    % end
 
     % get values for pdf
     x_min = -x_range/2; x_max = x_range/2;

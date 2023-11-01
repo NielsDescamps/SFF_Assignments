@@ -5,7 +5,7 @@ dof = 2;
 x_range = 12;
 N = 10000;
 
-pdf_ievals = calc_pdf_inversion(dof,x_range,N,'t');
+pdf_ievals = calc_tpdf_inversion(dof,x_range,N,'t');
 
 %% exact distribution 
 x = linspace(-x_range/2,x_range/2,N);

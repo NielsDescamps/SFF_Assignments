@@ -1,0 +1,84 @@
+dofx = 3;
+dofy = 1;
+
+N = 10000;
+z_range = 30; % range of z-plot
+z_min = -z_range/2; z_max = z_range/2;
+dz = (z_max-z_min)/(N-1);
+z = z_min:dz:z_max;
+
+%% Exact distribution of X and Y 
+% pdfx_evals = tpdf(z,dofx);
+% pdfy_evals = tpdf(z,dofy);
+% 
+% figure
+% plot(z,pdfx_evals)
+% hold on 
+% plot(z,pdfy_evals)
+% hold on 
+%% Convolution formula
+x_range = 1000; % integration range 
+x_min = -x_range/2; x_max = x_range/2;
+dx = (x_max-x_min)/(N-1);
+x = x_min:dx:x_max;
+
+z_range = 20; % range of plot
+z_min = -z_range/2; z_max = z_range/2;
+dz = (z_max-z_min)/(N-1);
+z = z_min:dz:z_max;
+
+pdfz_evals = zeros(1,N);
+
+for i=1:length(z)
+    pdfz_eval_i = trapz(x,tpdf(x,dofx).*tpdf(z(i)-x,dofy));
+    pdfz_evals(i) = pdfz_eval_i;
+end
+
+plot(z,pdfz_evals)
+hold on
+disp("---- convolution calculation finished")
+
+%% Kernel estimation
+
+%simulate N samples of X,Y and construct samples of Z=X + Y
+Nk = 1000000;
+xsims = trnd(dofx,1,Nk);
+ysims = trnd(dofy,1,Nk);
+
+zsims = xsims + ysims;
+pdfz = ksdensity(zsims,z,'Function','pdf','Bandwidth', 0.1, 'Kernel', 'epanechnikov', 'NumPoints', 10000000);
+
+plot(z,pdfz)
+hold on 
+disp("---- kernel estimation finished")
+
+%% Inversion formula
+t_range = 1000;
+t_min = -t_range/2; t_max = t_range/2;
+dt = (t_max-t_min)/(N-1);
+t = t_min:dt:t_max;
+
+cfz_evals = characteristic_function_studentt(t,dofx).*characteristic_function_studentt(t,dofy);
+
+pdfz_evals = zeros(1,N);
+    for i=1:length(z)
+        
+        pdfz_eval_i = trapz(t,real(cfz_evals.*exp(-1i*t*z(i)))/(2*pi));
+        pdfz_evals(i) = pdfz_eval_i;
+    end
+    
+pdfz = pdfz_evals;
+disp("---- inversion calculation finished")
+
+plot(z,pdfz)
+legend('convolution','kernel','inversion')
+% legend('pdfX','pdfY','convolution','kernel','inversion')
+title(['Density of Z=X+Y with dofX=',num2str(dofx),' and dofY=',num2str(dofy)])
+xlabel('z')
+ylabel('pdfZ')
+file_name = ['Q3/Q3dofx',num2str(dofx),'dofy',num2str(dofy),'_allmethods_noXY.png'];
+% saveas(gcf,file_name)
+
+
+
+
