@@ -1,0 +1,27 @@
+%% Task 5.
+
+
+df      = 3;
+ESlevel = 0.05;
+N       = 500;
+B       = 500;
+
+[ES_true, lb_para, ub_para, lb_nonpara, ub_nonpara, ES_emp_para, ES_emp_nonpara] = ES_CI(df, ESlevel, N, B);
+
+%% Plotting
+
+figure(1)
+boxplot(ES_emp_para)
+title('Empirical ES Boxplot under Parametric Bootstrap');
+xlabel('Empirical ES');
+
+figure(2)
+boxplot(ES_emp_nonpara)
+title('Empirical ES Boxplot under Non-Parametric Bootstrap');
+xlabel('Empirical ES');
+
+
+ES_emp = vertcat(ES_emp_para, ES_emp_nonpara);
+
+
+figure(3)
