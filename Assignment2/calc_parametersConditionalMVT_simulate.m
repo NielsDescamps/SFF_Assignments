@@ -21,6 +21,6 @@ function [mu_est,sigma_est,nu_est,conditional_sample] = calc_parametersCondition
     end
 
     % Get MLE estimate
-    tolerance = 0.001;
+    tolerance = 1e-3;
     [mu_est,sigma_est,nu_est] = calc_BFGS(conditional_sample, df, tolerance);
 end

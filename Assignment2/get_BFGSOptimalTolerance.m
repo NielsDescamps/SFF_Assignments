@@ -1,7 +1,6 @@
 function opt_tol = get_BFGSOptimalTolerance(sample,dof)
-
 %% Get a high accuracy solution using tolerance = 1e-14
-% Calculate high accuracy estimates 
+% Calculate high accuracy parameter estimates 
 [muhat_opt, chat_opt, dfhat_opt] = calc_BFGS(sample,dof,1e-14);
 dfhat_optSD = significant4Digits(dfhat_opt);
 muhat_optSD = significant4Digits(muhat_opt);
@@ -16,12 +15,11 @@ expLow = -11;
 expHigh = -1;
 toleranceList = generateToleranceLevels(expLow,expHigh);
 
-%% Find the optimal tolerance value from the list (4 significant digits)
-% for all tolerance levels do
+%% Find the optimal tolerance value from the list
 for i=1:length(toleranceList)
    tol = toleranceList(i);
     
-   % calculate parameter estimates
+   % calculate parameter estimates for tol
    [muhati, chati, dfhati] = calc_BFGS(sample,dof,tol);
    dfhatiSD = significant4Digits(dfhati);
    muhatiSD = significant4Digits(muhati);

@@ -38,7 +38,7 @@ function plotMVTLocationScaleSimulated(sample_size, mu, Sigma, df, dims,bandwidt
         zlabel('Density');
         title('Kernel Density Estimation of Location-Scale Bivariate Student t Samples');
         view(0, 90);
-        filename = ['figures/Q2/SimulatedPlots/',file_name,'Simulated_Topview.png'];
+        filename = ['figures/Q2/AdditionalPlots/',file_name,'Simulated_Topview.png'];
         saveas(gcf,filename);
         
         figure 
@@ -48,7 +48,7 @@ function plotMVTLocationScaleSimulated(sample_size, mu, Sigma, df, dims,bandwidt
         zlabel('Density');
         title('Kernel Density Estimation of Location-Scale Bivariate Student t Samples');
         view(45, 30);
-        filename = ['figures/Q2/SimulatedPlots/',file_name,'Simulated_sideview.png'];
+        filename = ['figures/Q2/AdditionalPlots/',file_name,'Simulated_sideview.png'];
         saveas(gcf,filename);
     end
 end

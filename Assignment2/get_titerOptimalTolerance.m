@@ -10,18 +10,16 @@ chat_optSD = significant4Digits(chat_opt);
 % Store the 4 significant digits of each parameter in opt_paramsSD
 opt_paramsSD = [dfhat_optSD(1), muhat_optSD(1), chat_optSD(1)];
 
-
 %% Generate a list of possible tolerance levels
 expLow = -11;
 expHigh = -1;
 toleranceList = generateToleranceLevels(expLow,expHigh);
 
-%% Find the optimal tolerance value from the list (4 significant digits)
-% for all tolerance levels do
+%% Find the sufficient tolerance value from the list (4 significant digits)
 for i=1:length(toleranceList)
    tol = toleranceList(i);
     
-   % calculate parameter estimates
+   % calculate parameter estimates using titer.m
    [dfhati, muhati, chati, ~] = titer(sample,tol);
    dfhatiSD = significant4Digits(dfhati);
    muhatiSD = significant4Digits(muhati);

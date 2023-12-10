@@ -30,17 +30,17 @@ function out = plotMVTLocationScaleExact(Location, Sigma, df, dims, num_points, 
     if save_fig == true
         figure 
         surf(x1plot, x2plot, F);
-        axis([locx1 - dim1, locx1 + dim1, locx2 - dim2, locx2 + dim2, 0, 0.4])
+        axis([locx1 - dim1, locx1 + dim1, locx2 - dim2, locx2 + dim2, 0, 0.3])
         xlabel('x1'); ylabel('x2'); zlabel('Probability Density');
-        campos([0,0,2.290063509461096])
-        filename = ['figures/Q2/',file_name,'_topview.png'];
+        view(0, 90);
+        filename = ['figures/Q2/AdditionalPlots/',file_name,'topview.png'];
         saveas(gcf,filename);
         
         figure 
         surf(x1plot, x2plot, F);
-        axis([locx1 - dim1, locx1 + dim1, locx2 - dim2, locx2 + dim2, 0, 0.4])
+        axis([locx1 - dim1, locx1 + dim1, locx2 - dim2, locx2 + dim2, 0, 0.3])
         xlabel('x1'); ylabel('x2'); zlabel('Probability Density');
-        filename = ['figures/Q2/',file_name,'_sideview.png'];
+        filename = ['figures/Q2/additionalPlots/',file_name,'sideview.png'];
         saveas(gcf,filename);
     end
         

@@ -1,17 +1,17 @@
 clear variables
 Mu = [0,0];
 Sigma = [1,0;0,1];
-df = 3;
+df = 5; %1,3,5
 condition = "X1onX2";
-x2 = 4; 
-save_fig=false;
+x2 = 3; %0,1,2,3
+save_fig=true;
 
 
 %% Calculate conditional parameters through analytic formula
 [mu_ana, sigma_ana, df_ana] = calc_parametersConditionalMVT_analytic(x2, Mu, Sigma, df,condition);
 
 %% Calculate conditional parameters through simulation
-sample_size = 1e7;
+sample_size = 1e8;
 epsilon = 1e-3;
 sample = mvtLocationScale_random(sample_size, Mu, Sigma, df);
 [mu_sim, sigma_sim, df_sim,~] = calc_parametersConditionalMVT_simulate(sample,df,x2,epsilon,condition);

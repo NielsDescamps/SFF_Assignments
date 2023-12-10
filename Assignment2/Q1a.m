@@ -1,5 +1,6 @@
 clear variables
-
+ % This script computes the optimal tolerance values for which exactly 4
+ % significant digits 
 rng(6,'twister');
 nu = 3;
 sampleSize = 250;
@@ -31,7 +32,7 @@ plot(x,f./sum(f));
 title('density of "optimal" tolerance for titer')
 xlabel('tolerance level')
 ylabel('pdf')
-file_name = ['figures/pdfOptToleranceValues_tist.png'];
+file_name = ['figures/Q1/pdfOptToleranceValues_tist.png'];
 saveas(gcf,file_name)
 
 figure
@@ -40,7 +41,7 @@ plot(x,f./sum(f));
 title('density of "optimal" tolerance for BFGS')
 xlabel('tolerance level')
 ylabel('pdf')
-file_name = ['figures/pdfOptTolerance_BFGS.png'];
+file_name = ['figures/Q1/pdfOptTolerance_BFGS.png'];
 saveas(gcf,file_name)
 
 

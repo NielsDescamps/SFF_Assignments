@@ -25,9 +25,6 @@ elseif condition == "X1onX2" % x1|x2
     Muc = mu1 + sigma12*sigma22^(-1)*(x-mu2);
     Sigmac = sqrt(scale_factor*(sigma11-sigma21*sigma12/sigma22));
     dfc = df + p;
-
 end
-
-
 
 end
